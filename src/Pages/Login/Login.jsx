@@ -20,7 +20,7 @@ const Login = () => {
   const from = location.state?.from?.pathname || "/";
 
   useEffect(() => {
-    loadCaptchaEnginge(6);
+    loadCaptchaEnginge(2);
   }, []);
 
   const handleLogin = (event) => {
@@ -126,7 +126,7 @@ const Login = () => {
               </div>
               <div className="form-control mt-6">
                 <input
-                  disabled={disabled}
+                  disabled={false}
                   className="btn btn-primary"
                   type="submit"
                   value="Login"
