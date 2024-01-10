@@ -126,6 +126,7 @@ const Login = () => {
               </div>
               <div className="form-control mt-6">
                 <input
+                  // todo: disabled will be putted
                   disabled={false}
                   className="btn btn-primary"
                   type="submit"
@@ -135,7 +136,7 @@ const Login = () => {
             </form>
             <p>
               <small>
-                New Here? <Link to="/signup">Create an account</Link>
+                New Here? <Link to="/signup">Create account</Link>
               </small>
             </p>
           </div>
