@@ -1,17 +1,22 @@
-import { useContext } from "react";
-import { AuthContext } from "../../providers/AuthProvider";
 import Swal from "sweetalert2";
 import { useLocation, useNavigate } from "react-router-dom";
+// import useAuth from "../../hooks/useAuth";
+import axios from "axios";
+import { useContext } from "react";
+import { AuthContext } from "../../providers/AuthProvider";
 
 const FoodCard = ({ item }) => {
   const { name, image, price, recipe } = item;
 
+  // console.log("auth", useAuth);
+
   const { user } = useContext(AuthContext);
+  // console.log(user, user?.email);
   const navigate = useNavigate();
   const location = useLocation();
 
   const handleAddToCart = (item) => {
-    console.log(item);
+    // console.log(item);
     if (user && user.email) {
       const cartItem = {
         // menuItemId: _id,
@@ -20,25 +25,38 @@ const FoodCard = ({ item }) => {
         price,
         email: user.email,
       };
-      fetch("http://localhost:5000/carts", {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(cartItem),
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          if (data.insertedId) {
-            Swal.fire({
-              position: "top-end",
-              icon: "success",
-              title: "Food added on the cart.",
-              showConfirmButton: false,
-              timer: 1500,
-            });
-          }
-        });
+
+      axios.post("http://localhost:5000/carts", cartItem).then((res) => {
+        if (res.data.insertedId) {
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: `${name} added on the cart.`,
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      });
+
+      // fetch("http://localhost:5000/carts", {
+      //   method: "POST",
+      //   headers: {
+      //     "content-type": "application/json",
+      //   },
+      //   body: JSON.stringify(cartItem),
+      // })
+      //   .then((res) => res.json())
+      //   .then((data) => {
+      //     if (data.insertedId) {
+      //       Swal.fire({
+      //         position: "top-end",
+      //         icon: "success",
+      //         title: "Food added on the cart.",
+      //         showConfirmButton: false,
+      //         timer: 1500,
+      //       });
+      //     }
+      //   });
     } else {
       Swal.fire({
         title: "Please login to order the food",
