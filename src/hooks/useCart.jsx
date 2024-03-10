@@ -10,7 +10,7 @@ const useCart = () => {
   const { refetch, data: cart = [] } = useQuery({
     queryKey: ["cart"],
     queryFn: async () => {
-      const res = await axiosSecure.get("/cart");
+      const res = await axiosSecure.get("/carts");
       return res.data;
     },
   });
