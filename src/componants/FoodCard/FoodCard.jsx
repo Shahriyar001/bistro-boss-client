@@ -1,10 +1,10 @@
 import Swal from "sweetalert2";
 import { useLocation, useNavigate } from "react-router-dom";
 // import useAuth from "../../hooks/useAuth";
-import axios from "axios";
 import { useContext } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
+import useCart from "../../hooks/useCart";
 
 const FoodCard = ({ item }) => {
   const { name, image, price, recipe } = item;
@@ -16,8 +16,10 @@ const FoodCard = ({ item }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const axiosSecure = useAxiosSecure();
+  const [cart, refetch] = useCart();
+  console.log(cart);
 
-  const handleAddToCart = (item) => {
+  const handleAddToCart = ({ item }) => {
     console.log(item);
     if (user && user.email) {
       const cartItem = {
@@ -37,6 +39,7 @@ const FoodCard = ({ item }) => {
             showConfirmButton: false,
             timer: 1500,
           });
+          refetch();
         }
       });
 
