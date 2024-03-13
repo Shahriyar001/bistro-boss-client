@@ -1,7 +1,15 @@
+import useCart from "../../../hooks/useCart";
+
 const Cart = () => {
+  const [cart] = useCart();
+  const totalPrice = cart.reduce((total, item) => total + item.price, 0);
   return (
     <div>
-      <h1>My Cart</h1>
+      <div className="flex justify-evenly">
+        <h1 className="text-4xl">Items: {cart.length}</h1>
+        <h1 className="text-4xl">Total Price: {totalPrice}</h1>
+        <button className="btn btn-primary">Pay</button>
+      </div>
     </div>
   );
 };
