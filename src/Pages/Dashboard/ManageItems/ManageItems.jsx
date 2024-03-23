@@ -1,8 +1,11 @@
+import { FaEdit, FaTrashAlt } from "react-icons/fa";
 import SectionTitle from "../../../Components/SectionTitle/SectionTitle";
 import useMenu from "../../../hooks/useMenu";
 
 const ManageItems = () => {
   const [menu] = useMenu();
+
+  const handleDeleteItem = (item) => {};
   return (
     <div>
       <SectionTitle
@@ -11,7 +14,7 @@ const ManageItems = () => {
       ></SectionTitle>
       <div>
         <div className="overflow-x-auto">
-          <table className="table">
+          <table className="table w-full">
             {/* head */}
             <thead>
               <tr>
@@ -24,41 +27,39 @@ const ManageItems = () => {
               </tr>
             </thead>
             <tbody>
-              {/* row 1 */}
-              <tr>
-                <th>
-                  <label>
-                    <input type="checkbox" className="checkbox" />
-                  </label>
-                </th>
-                <td>
-                  <div className="flex items-center gap-3">
-                    <div className="avatar">
-                      <div className="mask mask-squircle w-12 h-12">
-                        <img
-                          src="/tailwind-css-component-profile-2@56w.png"
-                          alt="Avatar Tailwind CSS Component"
-                        />
+              {menu.map((item, index) => (
+                <tr key={item._id}>
+                  <td>{index + 1}</td>
+                  <td>
+                    <div className="flex items-center gap-3">
+                      <div className="avatar">
+                        <div className="mask mask-squircle w-12 h-12">
+                          <img
+                            src={item.image}
+                            alt="Avatar Tailwind CSS Component"
+                          />
+                        </div>
                       </div>
                     </div>
-                    <div>
-                      <div className="font-bold">Hart Hagerty</div>
-                      <div className="text-sm opacity-50">United States</div>
-                    </div>
-                  </div>
-                </td>
-                <td>
-                  Zemlak, Daniel and Leannon
-                  <br />
-                  <span className="badge badge-ghost badge-sm">
-                    Desktop Support Technician
-                  </span>
-                </td>
-                <td>Purple</td>
-                <th>
-                  <button className="btn btn-ghost btn-xs">details</button>
-                </th>
-              </tr>
+                  </td>
+                  <td>{item.name}</td>
+                  <td className="text-right">${item.price}</td>
+
+                  <td>
+                    <button className="btn btn-sm btn-ghost bg-orange-500">
+                      <FaEdit className="text-white" />
+                    </button>
+                  </td>
+                  <td>
+                    <button
+                      onClick={() => handleDeleteItem(item)}
+                      className="btn btn-ghost btn-lg"
+                    >
+                      <FaTrashAlt />
+                    </button>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
